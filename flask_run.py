@@ -35,7 +35,14 @@ class GetProducts(Resource):
 app = Flask(__name__)
 api = Api(app)
 
+
+@app.route('/')
+def index():
+    return "Please use this url for getting the products. /products"
+
+
 api.add_resource(GetProducts, '/products')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
