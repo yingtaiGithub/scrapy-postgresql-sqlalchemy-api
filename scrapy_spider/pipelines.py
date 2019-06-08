@@ -34,8 +34,8 @@ class DBPipeline(object):
             last_date = row.last_date
             if last_date != date.today() and item['price']:
                 row.price = item['price']
-                prices = row.prices.split()
-                prices.insert(0, row['price'])
+                prices = [float(price) for price in row.prices.split()]
+                prices.insert(0, float(item['price']))
                 prices = prices[:180]
                 row.prices = ' '.join([str(price) for price in prices])
                 row.min_price = min(prices)

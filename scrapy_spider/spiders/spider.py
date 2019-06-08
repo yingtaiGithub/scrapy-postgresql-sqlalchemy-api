@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
 from urllib.parse import urljoin
+from datetime import date
 
 import scrapy
+from scrapy.spiders import CrawlSpider
 from scrapy_spider.items import ProductItem
+from sqlalchemy.orm import sessionmaker
+
+from scrapy_spider.models import db_connect, Products
 
 
 def clean_str(string):
@@ -40,6 +45,7 @@ class Spider(scrapy.Spider):
                 price = re.search('\d+\.?\d*', price_string.split()[0]).group(0)
             except IndexError:
                 price = ''
+
             try:
                 unit = price_string.split()[1]
             except IndexError:
@@ -58,4 +64,15 @@ class Spider(scrapy.Spider):
         next_page = response.xpath("//li[contains(@class, 'next')]/a/@href").extract()
         if len(next_page):
             yield scrapy.Request(urljoin(response.url, next_page[0]), callback=self.parse_category)
+
+    def closed(self, reason):
+        if reason == "finished":
+            engine = db_connect()
+            Session = sessionmaker(bind=engine)
+            session = Session()
+
+            rows = session.query(Products).filter(Products.last_date < date.today()).all()
+            for row in rows:
+                session.delete(row)
+            session.commit()
 

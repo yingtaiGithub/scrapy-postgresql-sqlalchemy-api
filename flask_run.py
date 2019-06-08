@@ -16,8 +16,10 @@ class GetProducts(Resource):
 
     def get(self):
         all_products = self.Session().query(Products).all()
-        results = [OrderedDict([('url', product.url), ('min_price', product.min_price), ('avg_price', product.avg_price)]) for
-                   product in all_products]
+        results = [
+            OrderedDict([('url', product.url), ('min_price', product.min_price), ('avg_price', product.avg_price)]) for
+            product in all_products]
+
         data = {'status': 200, 'result': results}
 
         return data
@@ -35,4 +37,5 @@ api = Api(app)
 
 api.add_resource(GetProducts, '/products')
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
