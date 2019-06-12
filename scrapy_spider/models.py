@@ -31,6 +31,7 @@ class Products(DeclarativeBase):
     __tablename__ = "products"
 
     url = Column(String(150), primary_key=True)
+    code = Column(String(20))
     title = Column(String(100))
     price = Column(Float)
     unit = Column(String(5))
@@ -38,6 +39,7 @@ class Products(DeclarativeBase):
     min_price = Column(Float)
     avg_price = Column(Float)
     last_date = Column(Date)
+    store = Column(String(10))
 
 
 

@@ -4,7 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
+import re
 from datetime import date
 
 from sqlalchemy.orm import sessionmaker
@@ -59,6 +59,8 @@ class DBPipeline(object):
             product.min_price = item['price']
             product.avg_price = item['price']
             product.last_date = date.today()
+            product.code = re.search('stockcode=(\d+)', item['url']).group(1)
+            product.store = 'countdown'
 
             try:
                 session.add(product)

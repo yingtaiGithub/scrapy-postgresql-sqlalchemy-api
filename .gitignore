@@ -3,4 +3,4 @@ deploy/
 doc/
 test.py
 scrapy_env.py
-
+**/__pycache__/
