@@ -1,20 +1,23 @@
 
-This project is 
+###This project is 
 
-1. A Scrapy spider shows you how to extract data from the web page.
+1. to extract the products from shop.countdown.co.nz and save into postgresql db
 
-2. How to handle pagination in Scrapy spider.
+2. to make an api with flask-restful api.
 
-3. A simple script which can make your Scrapy shell more powerful.
+3. to use Scrapy, Crawlera and Postgresql
 
-4. How to define Scrapy item, and how to create a custom Item Pipeline to save the data of Item into Databases such as Mysql or PostgreSQL.
 
-5. All the code can run without problem in Python2 and Python3
+## Running is 
 
-## Warning
+1. to run crawlera_run for executing the crawlera
+2. to run flask_run.py for executing the api server.
 
-When you run the code , make sure to edit `CONNECTION_STRING` in `scrapy_spider/settings.py`. If you want more detail about this project, just check the [Scrapy Tutorial Series: Web Scraping Using Python](https://blog.michaelyin.info/scrapy-tutorial-series-web-scraping-using-python/)
+## Dependencies
+    python3.6
+    postgresql
+    pip install -r req.txt
+    
+    
+    
 
-## Feedback
-
-If you have any problem, feel free to fire issues in Github, I will reply ASAP.
