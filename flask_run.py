@@ -44,7 +44,8 @@ class GetProducts(Resource):
             product = self.Session().query(Products).filter(
                 or_(Products.code == item['code'], Products.code == item['store'])).first()
 
-            products.append(product)
+            if product:
+                products.append(product)
 
         results = [
                     OrderedDict([('url', product.url), ('min_price', product.min_price), ('avg_price', product.avg_price)]) for
