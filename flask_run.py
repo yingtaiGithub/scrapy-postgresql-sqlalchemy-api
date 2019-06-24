@@ -33,6 +33,7 @@ class GetProducts(Resource):
         # print(title, image_path)
 
     def post(self):
+        session = self.Session()
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=dict, action='append')
 
@@ -41,7 +42,7 @@ class GetProducts(Resource):
 
         products = []
         for item in query:
-            product = self.Session().query(Products).filter(
+            product = session.query(Products).filter(
                 or_(Products.code == item['code'], Products.code == item['store'])).first()
 
             if product:
@@ -53,6 +54,8 @@ class GetProducts(Resource):
         ]
 
         data = {'status': 200, 'result': results}
+
+        session.close()
 
         return data
 
