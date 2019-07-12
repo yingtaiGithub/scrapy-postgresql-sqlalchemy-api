@@ -29,10 +29,12 @@ class DBPipeline(object):
         """
         session = self.Session()
 
-        row = session.query(Products).filter_by(url=item['url']).first()
+        code = re.search('stockcode=(\d+)', item['url']).group(1)
+        row = session.query(Products).filter_by(cod=code).first()
         if row:
             last_date = row.last_date
             if last_date != date.today() and item['price']:
+                row.url = item['url']
                 row.price = item['price']
                 prices = [float(price) for price in row.prices.split()]
                 prices.insert(0, float(item['price']))
@@ -51,6 +53,7 @@ class DBPipeline(object):
                     session.close()
         else:
             product = Products()
+            product.code = re.search('stockcode=(\d+)', item['url']).group(1)
             product.url = item['url']
             product.title = item['title']
             product.price = item['price']
@@ -59,7 +62,6 @@ class DBPipeline(object):
             product.min_price = item['price']
             product.avg_price = item['price']
             product.last_date = date.today()
-            product.code = re.search('stockcode=(\d+)', item['url']).group(1)
             product.store = 'countdown'
 
             try:

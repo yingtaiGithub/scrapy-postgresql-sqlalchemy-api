@@ -29,9 +29,8 @@ def create_table(engine):
 
 class Products(DeclarativeBase):
     __tablename__ = "products"
-
-    url = Column(String(150), primary_key=True)
-    code = Column(String(20))
+    code = Column(String(20), primary_key=True)
+    url = Column(String(150))
     title = Column(String(100))
     price = Column(Float)
     unit = Column(String(5))

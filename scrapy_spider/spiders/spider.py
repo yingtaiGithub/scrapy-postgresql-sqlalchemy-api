@@ -65,14 +65,14 @@ class Spider(scrapy.Spider):
         if len(next_page):
             yield scrapy.Request(urljoin(response.url, next_page[0]), callback=self.parse_category)
 
-    def closed(self, reason):
-        if reason == "finished":
-            engine = db_connect()
-            Session = sessionmaker(bind=engine)
-            session = Session()
+    # def closed(self, reason):
+    #     if reason == "finished":
+    #         engine = db_connect()
+    #         Session = sessionmaker(bind=engine)
+    #         session = Session()
 
-            rows = session.query(Products).filter(Products.last_date < date.today()).all()
-            for row in rows:
-                session.delete(row)
-            session.commit()
+            # rows = session.query(Products).filter(Products.last_date < date.today()).all()
+            # for row in rows:
+            #     session.delete(row)
+            # session.commit()
 
