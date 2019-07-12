@@ -62,7 +62,7 @@ class DBPipeline(object):
             product.min_price = item['price']
             product.avg_price = item['price']
             product.last_date = date.today()
-            product.store = 'c'
+            product.store = 'countdown'
 
             try:
                 session.add(product)
