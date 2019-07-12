@@ -30,7 +30,7 @@ class DBPipeline(object):
         session = self.Session()
 
         code = re.search('stockcode=(\d+)', item['url']).group(1)
-        row = session.query(Products).filter_by(cod=code).first()
+        row = session.query(Products).filter_by(code=code).first()
         if row:
             last_date = row.last_date
             if last_date != date.today() and item['price']:
@@ -62,7 +62,7 @@ class DBPipeline(object):
             product.min_price = item['price']
             product.avg_price = item['price']
             product.last_date = date.today()
-            product.store = 'countdown'
+            product.store = 'c'
 
             try:
                 session.add(product)
