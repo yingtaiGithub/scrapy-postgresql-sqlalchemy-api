@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_restful import Resource, reqparse, abort
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import or_
+from sqlalchemy import and_
 
 from scrapy_spider.models import db_connect, Products
 
@@ -43,7 +43,7 @@ class GetProducts(Resource):
         products = []
         for item in query:
             product = session.query(Products).filter(
-                or_(Products.code == item['code'], Products.code == item['store'])).first()
+                and_(Products.code == item['code'], Products.store == item['store'])).first()
 
             if product:
                 products.append(product)
